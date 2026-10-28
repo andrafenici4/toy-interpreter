@@ -49,4 +49,31 @@ public class Examples {
                     )
             )
     );
+    // Ex4 : int a; int b; bool c; a=5; b=a*2-3; c=true or false; if c then print(b) else print(a)
+    public static final IStmt EX4 = new CompStmt(
+            new VarDeclStmt("a", new IntType()),
+            new CompStmt(
+                    new VarDeclStmt("b", new IntType()),
+                    new CompStmt(
+                            new VarDeclStmt("c", new BoolType()),
+                            new CompStmt(
+                                    new AssignStmt("a", new ValueExp(new IntValue(5))),
+                                    new CompStmt(
+                                            new AssignStmt("b", new ArithExp(ArithOp.SUB,
+                                                    new ArithExp(ArithOp.MUL, new VarExp("a"), new ValueExp(new IntValue(2))),
+                                                    new ValueExp(new IntValue(3))
+                                            )),
+                                            new CompStmt(
+                                                    new AssignStmt("c", new LogicExp(LogicOp.OR, new ValueExp(new BoolValue(true)), new ValueExp(new BoolValue(false)))),
+                                                    new IfStmt(new VarExp("c"),
+                                                            new PrintStmt(new VarExp("b")),
+                                                            new PrintStmt(new VarExp("a"))
+                                                    )
+                                            )
+                                    )
+                            )
+                    )
+            )
+    );
+
 }
