@@ -1,4 +1,4 @@
-package view;
+package interpreter.view;
 
 import interpreter.model.exp.*;
 import interpreter.model.stmt.*;
