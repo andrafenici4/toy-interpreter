@@ -1,5 +1,3 @@
-package interpreter;
-
 import interpreter.controller.Controller;
 import interpreter.exceptions.MyException;
 import interpreter.model.PrgState;
