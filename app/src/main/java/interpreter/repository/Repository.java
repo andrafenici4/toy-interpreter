@@ -13,6 +13,6 @@ public class Repository implements IRepository {
 
     @Override
     public PrgState getCrtPrg() {
-        return prgStates.getFirst(); // Returnează starea curentă
+        return prgStates.getFirst();
     }
 }

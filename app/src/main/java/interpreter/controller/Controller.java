@@ -27,7 +27,7 @@ public class Controller {
 
     public void allStep() throws MyException {
         PrgState prg = repo.getCrtPrg();
-        display(prg); // Afișăm starea inițială
+        display(prg); // show initial state
 
         while (!prg.getExeStack().isEmpty()) {
             oneStep(prg);

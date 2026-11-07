@@ -46,11 +46,9 @@ public class Main {
             }
 
             try {
-                // Initializam starea programului cu ADT-uri goale
                 PrgState state = new PrgState(new MyStack<>(), new MyDictionary<>(), new MyList<>(), selectedProgram);
                 Repository repo = new Repository(state);
 
-                // Flag-ul true afiseaza pasii intermediari
                 Controller controller = new Controller(repo, true);
 
                 System.out.println("\n--- Executie ---");

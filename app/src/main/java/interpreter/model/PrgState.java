@@ -16,7 +16,7 @@ public class PrgState {
         this.symTable = symTable;
         this.out = out;
         this.originalProgram = program;
-        this.exeStack.push(program); // Când creăm starea, punem programul inițial pe stivă
+        this.exeStack.push(program); // when we create the state, we first put it on the stack
     }
 
     public IStack<IStmt> getExeStack() { return exeStack; }
