@@ -48,7 +48,7 @@ public class Main {
             try {
                 PrgState state = PrgState.of(selectedProgram);
 
-                Repository repo = new Repository(state);
+                Repository repo = new Repository(state, "log.txt");
 
                 Controller controller = new Controller(repo, true);
 

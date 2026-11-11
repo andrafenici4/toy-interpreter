@@ -18,7 +18,7 @@ class ControllerTest {
         PrgState state = PrgState.of(program);
 
 
-        Controller controller = new Controller(new Repository(state), false);
+        Controller controller = new Controller(new Repository(state, "log.txt"), false);
         controller.allStep();
         return state;
     }
