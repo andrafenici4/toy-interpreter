@@ -49,7 +49,8 @@ public class Examples {
                     )
             )
     );
-    // Ex4 : int a; int b; bool c; a=5; b=a*2-3; c=true or false; if c then print(b) else print(a)
+
+    // Ex4 (Exemplul tău cu LogicExp): int a; int b; bool c; a=5; b=a*2-3; c=true or false; if c then print(b) else print(a)
     public static final IStmt EX4 = new CompStmt(
             new VarDeclStmt("a", new IntType()),
             new CompStmt(
@@ -76,4 +77,37 @@ public class Examples {
             )
     );
 
+    // EX5 (Cerut la A3 ca Ex4): string varf; varf = "test.in"; openRFile(varf); int varc; readFile(varf, varc); print(varc); readFile(varf, varc); print(varc); closeRFile(varf)
+    public static IStmt fileExample(String fileName) {
+        return new CompStmt(new VarDeclStmt("varf", new StringType()),
+                new CompStmt(new AssignStmt("varf", new ValueExp(new StringValue(fileName))),
+                        new CompStmt(new OpenRFileStmt(new VarExp("varf")),
+                                new CompStmt(new VarDeclStmt("varc", new IntType()),
+                                        new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),
+                                                new CompStmt(new PrintStmt(new VarExp("varc")),
+                                                        new CompStmt(new ReadFileStmt(new VarExp("varf"), "varc"),
+                                                                new CompStmt(new PrintStmt(new VarExp("varc")),
+                                                                        new CloseRFileStmt(new VarExp("varf"))))))))));
+    }
+
+    public static final IStmt EX5 = fileExample("test.in");
+
+    // EX6 (Cerut la A3 ca Ex5): int a; int b; a=5; b=7; (if a<b then print(a) else print(b))
+    public static final IStmt EX6 = new CompStmt(
+            new VarDeclStmt("a", new IntType()),
+            new CompStmt(
+                    new VarDeclStmt("b", new IntType()),
+                    new CompStmt(
+                            new AssignStmt("a", new ValueExp(new IntValue(5))),
+                            new CompStmt(
+                                    new AssignStmt("b", new ValueExp(new IntValue(7))),
+                                    new IfStmt(
+                                            new RelationalExp(Relop.LT, new VarExp("a"), new VarExp("b")),
+                                            new PrintStmt(new VarExp("a")),
+                                            new PrintStmt(new VarExp("b"))
+                                    )
+                            )
+                    )
+            )
+    );
 }

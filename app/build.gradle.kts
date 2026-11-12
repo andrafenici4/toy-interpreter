@@ -28,3 +28,7 @@ tasks.named<JavaExec>("run") {
 tasks.named<Test>("test") {
     useJUnitPlatform()
 }
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+    workingDir = rootDir
+}
