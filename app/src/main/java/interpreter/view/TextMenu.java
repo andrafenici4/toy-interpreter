@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class TextMenu {
     private final Map<String, Command> commands = new LinkedHashMap<>(); // păstrează ordinea
-
+    // dictionar cu toate comenzile folosind hashmap
     public void addCommand(Command c) {
         commands.put(c.getKey(), c);
     }
