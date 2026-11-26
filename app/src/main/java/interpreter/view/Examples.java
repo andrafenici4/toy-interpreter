@@ -77,7 +77,7 @@ public class Examples {
             )
     );
 
-    // EX5 (Cerut la A3 ca Ex4): string varf; varf = "test.in"; openRFile(varf); int varc; readFile(varf, varc); print(varc); readFile(varf, varc); print(varc); closeRFile(varf)
+    // EX5 : string varf; varf = "test.in"; openRFile(varf); int varc; readFile(varf, varc); print(varc); readFile(varf, varc); print(varc); closeRFile(varf)
     public static IStmt fileExample(String fileName) {
         return new CompStmt(new VarDeclStmt("varf", new StringType()),
                 new CompStmt(new AssignStmt("varf", new ValueExp(new StringValue(fileName))),
@@ -92,7 +92,7 @@ public class Examples {
 
     public static final IStmt EX5 = fileExample("test.in");
 
-    // EX6 (Cerut la A3 ca Ex5): int a; int b; a=5; b=7; (if a<b then print(a) else print(b))
+    // EX6 : int a; int b; a=5; b=7; (if a<b then print(a) else print(b))
     public static final IStmt EX6 = new CompStmt(
             new VarDeclStmt("a", new IntType()),
             new CompStmt(
@@ -110,4 +110,57 @@ public class Examples {
                     )
             )
     );
+
+
+    // Ex7: Ref int v; new(v, 20); Ref Ref int a; new(a, v); print(v); print(a)
+    public static final IStmt EX7 =
+            new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                    new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                            new CompStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
+                                    new CompStmt(new NewStmt("a", new VarExp("v")),
+                                            new CompStmt(new PrintStmt(new VarExp("v")),
+                                                    new PrintStmt(new VarExp("a")))))));
+
+    // Ex8: Ref int v; new(v, 20); Ref Ref int a; new(a, v); print(rH(v)); print(rH(rH(a)) + 5)
+    public static final IStmt EX8 =
+            new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                    new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                            new CompStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
+                                    new CompStmt(new NewStmt("a", new VarExp("v")),
+                                            new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v"))),
+                                                    new PrintStmt(new ArithExp(ArithOp.ADD,
+                                                            new ReadHeapExp(new ReadHeapExp(new VarExp("a"))),
+                                                            new ValueExp(new IntValue(5)))))))));
+
+    // Ex9: Ref int v; new(v, 20); print(rH(v)); wH(v, 30); print(rH(v) + 5)
+    public static final IStmt EX9 =
+            new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                    new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                            new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v"))),
+                                    new CompStmt(new WriteHeapStmt("v", new ValueExp(new IntValue(30))),
+                                            new PrintStmt(new ArithExp(ArithOp.ADD,
+                                                    new ReadHeapExp(new VarExp("v")),
+                                                    new ValueExp(new IntValue(5))))))));
+
+    // Ex10: Ref int v; new(v, 20); Ref Ref int a; new(a, v); new(v, 30); print(rH(rH(a)))
+// Tests safe GC: address 1 is no longer in SymTable after new(v, 30), but still reachable via a
+    public static final IStmt EX10 =
+            new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                    new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                            new CompStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
+                                    new CompStmt(new NewStmt("a", new VarExp("v")),
+                                            new CompStmt(new NewStmt("v", new ValueExp(new IntValue(30))),
+                                                    new PrintStmt(new ReadHeapExp(new ReadHeapExp(new VarExp("a")))))))));
+
+    // Ex11: int v; v = 4; (while (v > 0) (print(v); v = v - 1)); print(v)
+    public static final IStmt EX11 =
+            new CompStmt(new VarDeclStmt("v", new IntType()),
+                    new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(4))),
+                            new CompStmt(new WhileStmt(
+                                    new RelationalExp(RelOp.GT, new VarExp("v"), new ValueExp(new IntValue(0))),
+                                    new CompStmt(new PrintStmt(new VarExp("v")),
+                                            new AssignStmt("v", new ArithExp(ArithOp.SUB,
+                                                    new VarExp("v"), new ValueExp(new IntValue(1)))))),
+                                    new PrintStmt(new VarExp("v")))));
+
 }

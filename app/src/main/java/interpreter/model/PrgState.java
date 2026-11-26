@@ -16,7 +16,7 @@ public class PrgState {
     private IStack<IStmt> exeStack;
     private IDictionary<String, IValue> symTable;
     private IList<IValue> out;
-    private IDictionary<StringValue, BufferedReader> fileTable; // Nou in A3
+    private IDictionary<StringValue, BufferedReader> fileTable;
     private final IStmt originalProgram;
 
     public PrgState(IStack<IStmt> exeStack,
@@ -40,6 +40,7 @@ public class PrgState {
     public IStack<IStmt> getExeStack() { return exeStack; }
     public IDictionary<String, IValue> getSymTable() { return symTable; }
     public IList<IValue> getOut() { return out; }
+
     public IDictionary<StringValue, BufferedReader> getFileTable() { return fileTable; }
 
     @Override
@@ -60,6 +61,24 @@ public class PrgState {
         sb.append("FileTable:\n");
         fileTable.toMap().keySet().forEach(f -> sb.append(f.val()).append('\n'));
         return sb.toString();
+        // Sort heap entries by address so logs remain deterministic across runs
+        sb.append("Heap:\n");
+        new TreeMap<>(heap.getContent()).forEach((addr, val) ->
+                sb.append(addr).append(" --> ").append(val).append("\n")
+        );
+
     }
+    // Factory method creates a fresh PrgState including an empty Heap
+    public static PrgState of(IStmt program) {
+        return new PrgState(
+                new MyStack<>(),
+                new MyDictionary<>(),
+                new MyList<>(),
+                new MyDictionary<>(),
+                new MyHeap(),
+                program
+        );
+    }
+
 
 }

@@ -27,14 +27,18 @@ public class Controller {
 
     public void allStep() throws MyException {
         PrgState prg = repo.getCrtPrg();
-        repo.logPrgStateExec(); // Save initial state
-        display(prg);
         while (!prg.getExeStack().isEmpty()) {
+            repo.logPrgStateExec();
             oneStep(prg);
-            repo.logPrgStateExec(); // Save the prgstate after each step
+            repo.logPrgStateExec(); // State before garbage collection
+            prg.getHeap().setContent(GarbageCollector.safeGarbageCollector(
+                    GarbageCollector.getAddrFromSymTable(prg.getSymTable().toMap().values()),
+                    prg.getHeap().getContent()));
+            repo.logPrgStateExec(); // State after garbage collection
             display(prg);
         }
     }
+
 
 
     private void display(PrgState prg) {
