@@ -1,4 +1,5 @@
 package interpreter.model.exp;
+import interpreter.model.adt.MyHeap;
 
 import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
@@ -23,13 +24,13 @@ class ArithExpTest {
     @Test
     void respectsOperatorPrecedence() throws MyException {
         IExp e = new ArithExp(ArithOp.ADD, num(2), new ArithExp(ArithOp.MUL, num(3), num(5)));
-        assertEquals(new IntValue(17), e.eval(symTable));
+        assertEquals(new IntValue(17), e.eval(symTable, new MyHeap()));
     }
 
     @Test
     void divisionByZeroThrows() {
         IExp e = new ArithExp(ArithOp.DIV, num(1), num(0));
-        var ex = assertThrows(ExpressionException.class, () -> e.eval(symTable));
+        var ex = assertThrows(ExpressionException.class, () -> e.eval(symTable, new MyHeap()));
         assertEquals("division by zero", ex.getMessage());
     }
 }
