@@ -1,4 +1,5 @@
 package interpreter.model.exp;
+import interpreter.model.adt.MyHeap;
 
 import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
@@ -22,13 +23,13 @@ class VarExpTest {
     void evaluatesToVariableValueWhenDefined() throws MyException {
         symTable.put("v", new IntValue(10));
         IExp e = new VarExp("v");
-        assertEquals(new IntValue(10), e.eval(symTable));
+        assertEquals(new IntValue(10), e.eval(symTable, new MyHeap()));
     }
 
     @Test
     void throwsExceptionWhenVariableUndefined() {
         IExp e = new VarExp("x");
-        var ex = assertThrows(ExpressionException.class, () -> e.eval(symTable));
+        var ex = assertThrows(ExpressionException.class, () -> e.eval(symTable, new MyHeap()));
         assertEquals("variable x is not defined", ex.getMessage());
     }
 }

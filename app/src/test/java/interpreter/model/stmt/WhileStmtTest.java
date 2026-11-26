@@ -29,7 +29,7 @@ class WhileStmtTest {
         IStmt prog = new CompStmt(
                 new VarDeclStmt("v", new IntType()),
                 new WhileStmt(
-                        new RelationalExp(RelOp.GT, new VarExp("v"), new ValueExp(new IntValue(0))),
+                        new RelationalExp(Relop.GT, new VarExp("v"), new ValueExp(new IntValue(0))),
                         new PrintStmt(new VarExp("v"))
                 )
         );
@@ -42,7 +42,7 @@ class WhileStmtTest {
         IStmt prog = new CompStmt(new VarDeclStmt("v", new IntType()),
                 new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(1))),
                         new WhileStmt(
-                                new RelationalExp(RelOp.GT, new VarExp("v"), new ValueExp(new IntValue(0))),
+                                new RelationalExp(Relop.GT, new VarExp("v"), new ValueExp(new IntValue(0))),
                                 new CompStmt(new PrintStmt(new VarExp("v")),
                                         new AssignStmt("v", new ArithExp(ArithOp.SUB,
                                                 new VarExp("v"), new ValueExp(new IntValue(1)))))
@@ -56,7 +56,7 @@ class WhileStmtTest {
         IStmt prog = new CompStmt(new VarDeclStmt("v", new IntType()),
                 new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(3))),
                         new WhileStmt(
-                                new RelationalExp(RelOp.GT, new VarExp("v"), new ValueExp(new IntValue(0))),
+                                new RelationalExp(Relop.GT, new VarExp("v"), new ValueExp(new IntValue(0))),
                                 new CompStmt(new PrintStmt(new VarExp("v")),
                                         new AssignStmt("v", new ArithExp(ArithOp.SUB,
                                                 new VarExp("v"), new ValueExp(new IntValue(1)))))

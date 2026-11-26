@@ -1,4 +1,5 @@
 package interpreter.model.exp;
+import interpreter.model.adt.MyHeap;
 
 import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
@@ -25,19 +26,19 @@ class LogicExpTest {
     @Test
     void logicAndWorksCorrectly() throws MyException {
         IExp e = new LogicExp(LogicOp.AND, boolExp(true), boolExp(false));
-        assertEquals(new BoolValue(false), e.eval(symTable));
+        assertEquals(new BoolValue(false), e.eval(symTable,new MyHeap()));
     }
 
     @Test
     void logicOrWorksCorrectly() throws MyException {
         IExp e = new LogicExp(LogicOp.OR, boolExp(false), boolExp(true));
-        assertEquals(new BoolValue(true), e.eval(symTable));
+        assertEquals(new BoolValue(true), e.eval(symTable,new MyHeap()));
     }
 
     @Test
     void nonBooleanOperandThrowsException() {
         IExp e = new LogicExp(LogicOp.AND, boolExp(true), intExp(5));
-        var ex = assertThrows(ExpressionException.class, () -> e.eval(symTable));
+        var ex = assertThrows(ExpressionException.class, () -> e.eval(symTable,new MyHeap()));
         assertEquals("second operand is not a boolean", ex.getMessage());
     }
 }

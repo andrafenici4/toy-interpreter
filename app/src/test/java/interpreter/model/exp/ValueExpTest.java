@@ -1,4 +1,5 @@
 package interpreter.model.exp;
+import interpreter.model.adt.MyHeap;
 
 import interpreter.exceptions.MyException;
 import interpreter.model.adt.IDictionary;
@@ -15,6 +16,6 @@ class ValueExpTest {
         IDictionary<String, IValue> symTable = new MyDictionary<>();
         IExp e = new ValueExp(new IntValue(42));
 
-        assertEquals(new IntValue(42), e.eval(symTable));
+        assertEquals(new IntValue(42), e.eval(symTable, new MyHeap()));
     }
 }
